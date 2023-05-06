@@ -101,10 +101,18 @@ export class coupons extends Model<couponsAttributes, couponsCreationAttributes>
     is_active: {
       type: DataTypes.BOOLEAN,
       allowNull: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'coupons',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

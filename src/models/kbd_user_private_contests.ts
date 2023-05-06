@@ -104,10 +104,18 @@ export class kbd_user_private_contests extends Model<kbd_user_private_contestsAt
     payment_data: {
       type: DataTypes.TEXT,
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'kbd_user_private_contests',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

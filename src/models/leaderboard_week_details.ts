@@ -56,10 +56,20 @@ export class leaderboard_week_details extends Model<leaderboard_week_detailsAttr
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: "0000-00-00 00:00:00"
     }
   }, {
     tableName: 'leaderboard_week_details',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

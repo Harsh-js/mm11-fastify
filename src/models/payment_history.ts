@@ -79,10 +79,18 @@ export class payment_history extends Model<payment_historyAttributes, payment_hi
     user_deposite_wallet: {
       type: DataTypes.DECIMAL(8,2),
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'payment_history',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

@@ -210,10 +210,18 @@ export class hky_contests extends Model<hky_contestsAttributes, hky_contestsCrea
       type: DataTypes.DECIMAL(8,2),
       allowNull: false,
       defaultValue: 0.00
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'hky_contests',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

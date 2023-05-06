@@ -369,10 +369,18 @@ export class ftb_squads extends Model<ftb_squadsAttributes, ftb_squadsCreationAt
     second_inning: {
       type: DataTypes.TEXT,
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'ftb_squads',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

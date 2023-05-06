@@ -77,10 +77,18 @@ export class fantasy_points extends Model<fantasy_pointsAttributes, fantasy_poin
     type: {
       type: DataTypes.ENUM('T20','T10','ODI','TEST','THE HUNDRED'),
       allowNull: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'fantasy_points',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

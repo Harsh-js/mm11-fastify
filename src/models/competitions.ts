@@ -172,10 +172,18 @@ export class competitions extends Model<competitionsAttributes, competitionsCrea
     influencer_prize_breakup: {
       type: DataTypes.JSON,
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'competitions',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

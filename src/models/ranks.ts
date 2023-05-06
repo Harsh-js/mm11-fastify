@@ -65,10 +65,18 @@ export class ranks extends Model<ranksAttributes, ranksCreationAttributes> imple
     percentage: {
       type: DataTypes.DOUBLE(8,2),
       allowNull: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'ranks',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

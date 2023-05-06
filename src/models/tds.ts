@@ -76,10 +76,18 @@ export class tds extends Model<tdsAttributes, tdsCreationAttributes> implements 
     note: {
       type: DataTypes.STRING(255),
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'tds',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

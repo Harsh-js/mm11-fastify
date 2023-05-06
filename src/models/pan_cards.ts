@@ -85,10 +85,18 @@ export class pan_cards extends Model<pan_cardsAttributes, pan_cardsCreationAttri
     message: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'pan_cards',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

@@ -129,10 +129,18 @@ export class payments_copy2 extends Model<payments_copy2Attributes, payments_cop
     coupon_id: {
       type: DataTypes.BIGINT.UNSIGNED,
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'payments_copy2',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

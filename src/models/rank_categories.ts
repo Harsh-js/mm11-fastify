@@ -50,10 +50,18 @@ export class rank_categories extends Model<rank_categoriesAttributes, rank_categ
     winner: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'rank_categories',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

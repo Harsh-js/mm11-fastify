@@ -56,10 +56,20 @@ export class bsb_players extends Model<bsb_playersAttributes, bsb_playersCreatio
     image: {
       type: DataTypes.STRING(255),
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     tableName: 'bsb_players',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

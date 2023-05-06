@@ -62,10 +62,18 @@ export class personal_access_tokens extends Model<personal_access_tokensAttribut
     last_used_at: {
       type: DataTypes.DATE,
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'personal_access_tokens',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

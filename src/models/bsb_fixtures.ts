@@ -326,10 +326,18 @@ export class bsb_fixtures extends Model<bsb_fixturesAttributes, bsb_fixturesCrea
       type: DataTypes.BIGINT,
       allowNull: false,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'bsb_fixtures',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

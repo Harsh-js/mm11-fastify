@@ -11,7 +11,7 @@ const authRoute = async (app: FastifyInstance) => {
 			schema: {
 				tags: ["auth"],
 				response: {
-					200: convert(Joi.array().items(modelSchema.users)),
+					200: convert(modelSchema.states),
 				},
 			},
 		},

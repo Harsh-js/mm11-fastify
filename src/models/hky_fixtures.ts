@@ -326,10 +326,18 @@ export class hky_fixtures extends Model<hky_fixturesAttributes, hky_fixturesCrea
       type: DataTypes.BIGINT,
       allowNull: false,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'hky_fixtures',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

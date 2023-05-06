@@ -94,10 +94,18 @@ export class hky_competitions extends Model<hky_competitionsAttributes, hky_comp
     influencer_prize_breakup: {
       type: DataTypes.TEXT,
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'hky_competitions',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

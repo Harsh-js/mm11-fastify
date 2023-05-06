@@ -80,10 +80,18 @@ export class admins extends Model<adminsAttributes, adminsCreationAttributes> im
     otp: {
       type: DataTypes.STRING(10),
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'admins',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

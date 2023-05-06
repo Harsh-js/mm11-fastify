@@ -118,10 +118,18 @@ export class referal_deposit_details extends Model<referal_deposit_detailsAttrib
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'referal_deposit_details',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

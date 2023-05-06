@@ -395,10 +395,18 @@ export class hky_squads extends Model<hky_squadsAttributes, hky_squadsCreationAt
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'hky_squads',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

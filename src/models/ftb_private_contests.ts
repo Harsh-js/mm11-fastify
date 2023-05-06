@@ -150,10 +150,18 @@ export class ftb_private_contests extends Model<ftb_private_contestsAttributes, 
       type: DataTypes.ENUM('NOT STARTED','LIVE','IN REVIEW','COMPLETED','CANCELED'),
       allowNull: false,
       defaultValue: "NOT STARTED"
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'ftb_private_contests',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

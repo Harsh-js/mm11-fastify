@@ -25,10 +25,14 @@ export class password_resets extends Model<password_resetsAttributes, password_r
     token: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'password_resets',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "password_resets_email_index",

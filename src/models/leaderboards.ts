@@ -15,7 +15,7 @@ export interface leaderboardsAttributes {
 
 export type leaderboardsPk = "id";
 export type leaderboardsId = leaderboards[leaderboardsPk];
-export type leaderboardsOptionalAttributes = "id" | "rank" | "created_at" | "updated_at";
+export type leaderboardsOptionalAttributes = "id" | "rank";
 export type leaderboardsCreationAttributes = Optional<leaderboardsAttributes, leaderboardsOptionalAttributes>;
 
 export class leaderboards extends Model<leaderboardsAttributes, leaderboardsCreationAttributes> implements leaderboardsAttributes {
@@ -70,10 +70,18 @@ export class leaderboards extends Model<leaderboardsAttributes, leaderboardsCrea
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: false
     }
   }, {
     tableName: 'leaderboards',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

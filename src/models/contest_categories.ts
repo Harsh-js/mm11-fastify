@@ -146,10 +146,18 @@ export class contest_categories extends Model<contest_categoriesAttributes, cont
     image: {
       type: DataTypes.STRING(255),
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'contest_categories',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

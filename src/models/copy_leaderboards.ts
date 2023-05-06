@@ -13,7 +13,7 @@ export interface copy_leaderboardsAttributes {
 
 export type copy_leaderboardsPk = "id";
 export type copy_leaderboardsId = copy_leaderboards[copy_leaderboardsPk];
-export type copy_leaderboardsOptionalAttributes = "id" | "rank" | "created_at" | "updated_at";
+export type copy_leaderboardsOptionalAttributes = "id" | "rank";
 export type copy_leaderboardsCreationAttributes = Optional<copy_leaderboardsAttributes, copy_leaderboardsOptionalAttributes>;
 
 export class copy_leaderboards extends Model<copy_leaderboardsAttributes, copy_leaderboardsCreationAttributes> implements copy_leaderboardsAttributes {
@@ -50,10 +50,18 @@ export class copy_leaderboards extends Model<copy_leaderboardsAttributes, copy_l
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: false
     }
   }, {
     tableName: 'copy_leaderboards',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

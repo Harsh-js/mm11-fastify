@@ -118,10 +118,18 @@ export class adhaar extends Model<adhaarAttributes, adhaarCreationAttributes> im
     ease_contact_id: {
       type: DataTypes.STRING(100),
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'adhaar',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

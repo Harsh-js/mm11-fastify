@@ -81,10 +81,20 @@ export class ftb_players extends Model<ftb_playersAttributes, ftb_playersCreatio
     image: {
       type: DataTypes.STRING(255),
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     tableName: 'ftb_players',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

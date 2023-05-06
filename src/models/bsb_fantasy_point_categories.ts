@@ -57,10 +57,18 @@ export class bsb_fantasy_point_categories extends Model<bsb_fantasy_point_catego
     image: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'bsb_fantasy_point_categories',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

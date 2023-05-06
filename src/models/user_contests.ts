@@ -103,10 +103,18 @@ export class user_contests extends Model<user_contestsAttributes, user_contestsC
     payment_data: {
       type: DataTypes.JSON,
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'user_contests',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

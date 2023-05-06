@@ -103,10 +103,18 @@ export class hky_user_contests extends Model<hky_user_contestsAttributes, hky_us
     payment_data: {
       type: DataTypes.TEXT,
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'hky_user_contests',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

@@ -126,10 +126,18 @@ export class referal_amount_details extends Model<referal_amount_detailsAttribut
     contest_meta_data: {
       type: DataTypes.JSON,
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'referal_amount_details',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

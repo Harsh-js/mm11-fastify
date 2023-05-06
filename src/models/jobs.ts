@@ -13,7 +13,7 @@ export interface jobsAttributes {
 
 export type jobsPk = "id";
 export type jobsId = jobs[jobsPk];
-export type jobsOptionalAttributes = "id" | "reserved_at" | "created_at";
+export type jobsOptionalAttributes = "id" | "reserved_at";
 export type jobsCreationAttributes = Optional<jobsAttributes, jobsOptionalAttributes>;
 
 export class jobs extends Model<jobsAttributes, jobsCreationAttributes> implements jobsAttributes {
@@ -53,10 +53,14 @@ export class jobs extends Model<jobsAttributes, jobsCreationAttributes> implemen
     available_at: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false
+    },
+    created_at: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false
     }
   }, {
     tableName: 'jobs',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

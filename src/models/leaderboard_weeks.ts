@@ -16,7 +16,7 @@ export interface leaderboard_weeksAttributes {
 
 export type leaderboard_weeksPk = "id";
 export type leaderboard_weeksId = leaderboard_weeks[leaderboard_weeksPk];
-export type leaderboard_weeksOptionalAttributes = "id" | "competition_id" | "competition_name" | "start_week" | "end_week" | "days" | "created_at" | "updated_at";
+export type leaderboard_weeksOptionalAttributes = "id" | "competition_id" | "competition_name" | "start_week" | "end_week" | "days";
 export type leaderboard_weeksCreationAttributes = Optional<leaderboard_weeksAttributes, leaderboard_weeksOptionalAttributes>;
 
 export class leaderboard_weeks extends Model<leaderboard_weeksAttributes, leaderboard_weeksCreationAttributes> implements leaderboard_weeksAttributes {
@@ -71,10 +71,18 @@ export class leaderboard_weeks extends Model<leaderboard_weeksAttributes, leader
     prize_breakup: {
       type: DataTypes.JSON,
       allowNull: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: false
     }
   }, {
     tableName: 'leaderboard_weeks',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

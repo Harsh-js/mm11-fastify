@@ -135,13 +135,21 @@ export class bsb_user_teams extends Model<bsb_user_teamsAttributes, bsb_user_tea
       allowNull: true,
       defaultValue: 0
     },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
     master_player_id: {
       type: DataTypes.BIGINT,
       allowNull: true
     }
   }, {
     tableName: 'bsb_user_teams',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

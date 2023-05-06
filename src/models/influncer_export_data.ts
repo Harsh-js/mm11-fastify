@@ -84,10 +84,18 @@ export class influncer_export_data extends Model<influncer_export_dataAttributes
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'influncer_export_data',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

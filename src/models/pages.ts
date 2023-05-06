@@ -44,10 +44,18 @@ export class pages extends Model<pagesAttributes, pagesCreationAttributes> imple
     content: {
       type: DataTypes.TEXT,
       allowNull: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'pages',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

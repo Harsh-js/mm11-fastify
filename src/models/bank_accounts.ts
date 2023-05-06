@@ -124,10 +124,18 @@ export class bank_accounts extends Model<bank_accountsAttributes, bank_accountsC
     ease_contact_id: {
       type: DataTypes.STRING(100),
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'bank_accounts',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

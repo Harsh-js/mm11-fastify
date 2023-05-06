@@ -37,10 +37,18 @@ export class logs extends Model<logsAttributes, logsCreationAttributes> implemen
     user_email: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'logs',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

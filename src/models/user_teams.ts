@@ -142,6 +142,14 @@ export class user_teams extends Model<user_teamsAttributes, user_teamsCreationAt
       allowNull: true,
       defaultValue: 0
     },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
     master_player_id: {
       type: DataTypes.BIGINT,
       allowNull: true,
@@ -149,7 +157,7 @@ export class user_teams extends Model<user_teamsAttributes, user_teamsCreationAt
     }
   }, {
     tableName: 'user_teams',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

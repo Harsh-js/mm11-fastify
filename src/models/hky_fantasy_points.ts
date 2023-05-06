@@ -59,10 +59,18 @@ export class hky_fantasy_points extends Model<hky_fantasy_pointsAttributes, hky_
     point: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'hky_fantasy_points',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

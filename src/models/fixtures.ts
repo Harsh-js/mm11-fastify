@@ -360,10 +360,18 @@ export class fixtures extends Model<fixturesAttributes, fixturesCreationAttribut
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'fixtures',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

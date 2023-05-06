@@ -314,10 +314,18 @@ export class kbd_fixtures extends Model<kbd_fixturesAttributes, kbd_fixturesCrea
       type: DataTypes.BIGINT,
       allowNull: true,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'kbd_fixtures',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

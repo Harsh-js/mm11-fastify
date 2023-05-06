@@ -38,10 +38,20 @@ export class admin_pages extends Model<admin_pagesAttributes, admin_pagesCreatio
     slug: {
       type: DataTypes.STRING(100),
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: "0000-00-00 00:00:00"
     }
   }, {
     tableName: 'admin_pages',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

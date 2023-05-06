@@ -139,10 +139,18 @@ export class ftb_user_teams extends Model<ftb_user_teamsAttributes, ftb_user_tea
       type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'ftb_user_teams',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

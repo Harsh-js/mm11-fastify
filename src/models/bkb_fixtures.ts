@@ -327,10 +327,18 @@ export class bkb_fixtures extends Model<bkb_fixturesAttributes, bkb_fixturesCrea
       type: DataTypes.BIGINT,
       allowNull: false,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'bkb_fixtures',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

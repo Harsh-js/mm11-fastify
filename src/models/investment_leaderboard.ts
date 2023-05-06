@@ -15,7 +15,7 @@ export interface investment_leaderboardAttributes {
 
 export type investment_leaderboardPk = "id";
 export type investment_leaderboardId = investment_leaderboard[investment_leaderboardPk];
-export type investment_leaderboardOptionalAttributes = "id" | "rank" | "created_at" | "updated_at";
+export type investment_leaderboardOptionalAttributes = "id" | "rank";
 export type investment_leaderboardCreationAttributes = Optional<investment_leaderboardAttributes, investment_leaderboardOptionalAttributes>;
 
 export class investment_leaderboard extends Model<investment_leaderboardAttributes, investment_leaderboardCreationAttributes> implements investment_leaderboardAttributes {
@@ -70,10 +70,18 @@ export class investment_leaderboard extends Model<investment_leaderboardAttribut
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: false
     }
   }, {
     tableName: 'investment_leaderboard',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

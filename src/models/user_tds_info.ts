@@ -14,7 +14,7 @@ export interface user_tds_infoAttributes {
 
 export type user_tds_infoPk = "id";
 export type user_tds_infoId = user_tds_info[user_tds_infoPk];
-export type user_tds_infoOptionalAttributes = "id" | "total_deposit" | "total_withdraw" | "tds_amount" | "created_at" | "updated_at";
+export type user_tds_infoOptionalAttributes = "id" | "total_deposit" | "total_withdraw" | "tds_amount";
 export type user_tds_infoCreationAttributes = Optional<user_tds_infoAttributes, user_tds_infoOptionalAttributes>;
 
 export class user_tds_info extends Model<user_tds_infoAttributes, user_tds_infoCreationAttributes> implements user_tds_infoAttributes {
@@ -55,10 +55,18 @@ export class user_tds_info extends Model<user_tds_infoAttributes, user_tds_infoC
     tds_amount: {
       type: DataTypes.DECIMAL(11,2),
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: false
     }
   }, {
     tableName: 'user_tds_info',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

@@ -37,10 +37,18 @@ export class faqs extends Model<faqsAttributes, faqsCreationAttributes> implemen
     description: {
       type: DataTypes.TEXT,
       allowNull: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'faqs',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

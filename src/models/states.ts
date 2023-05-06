@@ -78,10 +78,18 @@ export class states extends Model<statesAttributes, statesCreationAttributes> im
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: 1
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'states',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

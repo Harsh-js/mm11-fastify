@@ -15,7 +15,7 @@ export interface kbd_leaderboardsAttributes {
 
 export type kbd_leaderboardsPk = "id";
 export type kbd_leaderboardsId = kbd_leaderboards[kbd_leaderboardsPk];
-export type kbd_leaderboardsOptionalAttributes = "id" | "rank" | "created_at" | "updated_at";
+export type kbd_leaderboardsOptionalAttributes = "id" | "rank";
 export type kbd_leaderboardsCreationAttributes = Optional<kbd_leaderboardsAttributes, kbd_leaderboardsOptionalAttributes>;
 
 export class kbd_leaderboards extends Model<kbd_leaderboardsAttributes, kbd_leaderboardsCreationAttributes> implements kbd_leaderboardsAttributes {
@@ -70,10 +70,18 @@ export class kbd_leaderboards extends Model<kbd_leaderboardsAttributes, kbd_lead
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: false
     }
   }, {
     tableName: 'kbd_leaderboards',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

@@ -55,10 +55,18 @@ export class notifications extends Model<notificationsAttributes, notificationsC
     image: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'notifications',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

@@ -94,10 +94,18 @@ export class bsb_competitions extends Model<bsb_competitionsAttributes, bsb_comp
     influencer_prize_breakup: {
       type: DataTypes.TEXT,
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'bsb_competitions',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

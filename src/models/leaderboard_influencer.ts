@@ -13,7 +13,7 @@ export interface leaderboard_influencerAttributes {
 
 export type leaderboard_influencerPk = "id";
 export type leaderboard_influencerId = leaderboard_influencer[leaderboard_influencerPk];
-export type leaderboard_influencerOptionalAttributes = "id" | "deposit" | "rank" | "created_at" | "updated_at";
+export type leaderboard_influencerOptionalAttributes = "id" | "deposit" | "rank";
 export type leaderboard_influencerCreationAttributes = Optional<leaderboard_influencerAttributes, leaderboard_influencerOptionalAttributes>;
 
 export class leaderboard_influencer extends Model<leaderboard_influencerAttributes, leaderboard_influencerCreationAttributes> implements leaderboard_influencerAttributes {
@@ -55,10 +55,18 @@ export class leaderboard_influencer extends Model<leaderboard_influencerAttribut
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: false
     }
   }, {
     tableName: 'leaderboard_influencer',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

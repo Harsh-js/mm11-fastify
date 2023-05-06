@@ -381,10 +381,18 @@ export class kbd_squads extends Model<kbd_squadsAttributes, kbd_squadsCreationAt
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'kbd_squads',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

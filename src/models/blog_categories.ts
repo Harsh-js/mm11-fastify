@@ -38,10 +38,18 @@ export class blog_categories extends Model<blog_categoriesAttributes, blog_categ
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: 1
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'blog_categories',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

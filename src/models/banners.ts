@@ -56,10 +56,18 @@ export class banners extends Model<bannersAttributes, bannersCreationAttributes>
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: 1
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'banners',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

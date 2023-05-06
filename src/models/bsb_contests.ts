@@ -211,10 +211,18 @@ export class bsb_contests extends Model<bsb_contestsAttributes, bsb_contestsCrea
       type: DataTypes.DECIMAL(8,2),
       allowNull: false,
       defaultValue: 0.00
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'bsb_contests',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

@@ -241,10 +241,18 @@ export class bkb_squads extends Model<bkb_squadsAttributes, bkb_squadsCreationAt
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'bkb_squads',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

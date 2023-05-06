@@ -73,10 +73,18 @@ export class user_contests_copy1 extends Model<user_contests_copy1Attributes, us
     payment_data: {
       type: DataTypes.JSON,
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'user_contests_copy1',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

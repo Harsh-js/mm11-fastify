@@ -117,10 +117,18 @@ export class payments_till_august extends Model<payments_till_augustAttributes, 
     coupon_id: {
       type: DataTypes.BIGINT.UNSIGNED,
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'payments_till_august',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

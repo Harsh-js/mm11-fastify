@@ -59,10 +59,18 @@ export class ftb_fantasy_points extends Model<ftb_fantasy_pointsAttributes, ftb_
     point: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'ftb_fantasy_points',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

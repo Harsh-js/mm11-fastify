@@ -79,10 +79,18 @@ export class blogs extends Model<blogsAttributes, blogsCreationAttributes> imple
     status: {
       type: DataTypes.BOOLEAN,
       allowNull: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'blogs',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

@@ -15,7 +15,7 @@ export interface ftb_leaderboardsAttributes {
 
 export type ftb_leaderboardsPk = "id";
 export type ftb_leaderboardsId = ftb_leaderboards[ftb_leaderboardsPk];
-export type ftb_leaderboardsOptionalAttributes = "id" | "rank" | "created_at" | "updated_at";
+export type ftb_leaderboardsOptionalAttributes = "id" | "rank";
 export type ftb_leaderboardsCreationAttributes = Optional<ftb_leaderboardsAttributes, ftb_leaderboardsOptionalAttributes>;
 
 export class ftb_leaderboards extends Model<ftb_leaderboardsAttributes, ftb_leaderboardsCreationAttributes> implements ftb_leaderboardsAttributes {
@@ -70,10 +70,18 @@ export class ftb_leaderboards extends Model<ftb_leaderboardsAttributes, ftb_lead
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: false
     }
   }, {
     tableName: 'ftb_leaderboards',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

@@ -56,10 +56,20 @@ export class hky_players extends Model<hky_playersAttributes, hky_playersCreatio
     image: {
       type: DataTypes.STRING(255),
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     tableName: 'hky_players',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

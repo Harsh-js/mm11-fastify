@@ -339,10 +339,18 @@ export class bsb_squads extends Model<bsb_squadsAttributes, bsb_squadsCreationAt
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'bsb_squads',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

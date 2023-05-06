@@ -9,6 +9,9 @@ const options: AutoOptions = {
 	singularize: false,
 	useDefine: true,
 	views: true,
+	additional: {
+		timestamps: false,
+	},
 };
 const auto = new SequelizeAuto(
 	config.db,

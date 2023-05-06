@@ -135,13 +135,21 @@ export class kbd_user_teams extends Model<kbd_user_teamsAttributes, kbd_user_tea
       allowNull: true,
       defaultValue: 0
     },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
     master_player_id: {
       type: DataTypes.BIGINT,
       allowNull: true
     }
   }, {
     tableName: 'kbd_user_teams',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

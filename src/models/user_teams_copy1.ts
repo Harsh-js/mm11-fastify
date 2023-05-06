@@ -89,6 +89,14 @@ export class user_teams_copy1 extends Model<user_teams_copy1Attributes, user_tea
       allowNull: true,
       defaultValue: 0
     },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
     master_player_id: {
       type: DataTypes.BIGINT,
       allowNull: true,
@@ -96,7 +104,7 @@ export class user_teams_copy1 extends Model<user_teams_copy1Attributes, user_tea
     }
   }, {
     tableName: 'user_teams_copy1',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

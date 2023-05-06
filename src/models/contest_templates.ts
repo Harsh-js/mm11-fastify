@@ -166,10 +166,18 @@ export class contest_templates extends Model<contest_templatesAttributes, contes
     pdf: {
       type: DataTypes.JSON,
       allowNull: true
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'contest_templates',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

@@ -84,10 +84,18 @@ export class new_demop extends Model<new_demopAttributes, new_demopCreationAttri
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'new_demop',
-    timestamps: true
+    timestamps: false
   }) as typeof new_demop;
   }
 }
