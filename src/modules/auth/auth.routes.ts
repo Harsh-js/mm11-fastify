@@ -1,5 +1,8 @@
 import { FastifyInstance } from "fastify";
 import cn from "./auth.controllers";
+import modelSchema from "@models/json/modelSchema";
+import Joi from "joi";
+const convert = require("joi-to-json");
 
 const authRoute = async (app: FastifyInstance) => {
 	app.get(
@@ -8,17 +11,7 @@ const authRoute = async (app: FastifyInstance) => {
 			schema: {
 				tags: ["auth"],
 				response: {
-					200: {
-						type: "object",
-						properties: {
-							id: { type: "string" },
-							name: { type: "string" },
-							is_active: { type: "string" },
-							createdAt: { type: "string" },
-							updatedAt: { type: "string" },
-						},
-						required: ["id", "name", "is_active", "createdAt", "updatedAt"],
-					},
+					200: convert(Joi.array().items(modelSchema.users)),
 				},
 			},
 		},

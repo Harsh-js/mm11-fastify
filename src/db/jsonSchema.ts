@@ -40,8 +40,7 @@ const sequelizeToJoi = (model: typeof Model) => {
 
 		if (type == DataTypes.ENUM.key) {
 			joiType =
-				joiType +
-				`.valid([${[...value.values].map((m) => `"${m}"`).join(",")}])`;
+				joiType + `.valid(${[...value.values].map((m) => `"${m}"`).join(",")})`;
 		}
 
 		if (isRequired) {
@@ -69,7 +68,7 @@ const joiSchema = sequelizeToJoi(models["states"]);
 // console.log("userSchema: ", joiSchema);
 
 fs.writeFileSync(
-	"myModelSchema.ts",
+	`${process.cwd()}/src/models/json/modelSchema.ts`,
 	`import * as Joi from 'joi';\n\nexport default {${content}};\n`,
 );
 // console.log("userSchema: ", userSchema);
