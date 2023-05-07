@@ -9,6 +9,7 @@ import fastifyRoutes from "@fastify/routes";
 import { log } from "@helpers/logger";
 import routes from "./routes";
 import { errorHandler } from "@middleware/errorHanlder";
+import env from "@config/env";
 const convert = require("joi-to-json");
 
 const schema = Joi.object({
@@ -23,18 +24,34 @@ const paramSchema = Joi.object({
 
 async function main() {
 	try {
-		const server = Fastify();
+		const server = Fastify({
+			// logger: {
+			// 	transport: {
+			// 		target: 'pino-pretty',
+			// 		options: {
+			// 			translateTime: 'HH:MM:ss Z',
+			// 			ignore: '*',
+
+			// 		},
+			// 	},
+			// }
+		});
 
 		await server.register(require("fastify-joi"));
 
 		await server.register(fastifyRoutes);
 
+		server.setSerializerCompiler(({ schema, method, url, httpStatus, contentType }) => {
+			return data => JSON.stringify(data)
+		})
+
+
+
 		server.setValidatorCompiler(({ schema, ...other }: any) => {
-			console.log("other: ", other);
 			return (data) => {
 				const val = schema.validate(data);
 				if (val?.error) {
-					throw Error(val?.error?.message);
+					throw new AppErr(val?.error?.message);
 				}
 
 				return val;
@@ -122,10 +139,10 @@ async function main() {
 
 		await server.listen({
 			host: "0.0.0.0",
-			port: 3001,
+			port: env.port,
 		});
 
-		console.log(`Server ready at http://localhost:3000`);
+		console.log(`Server ready at http://localhost:${env.port}`);
 		return server;
 	} catch (e) {
 		console.error(e);

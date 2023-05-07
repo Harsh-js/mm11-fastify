@@ -4,7 +4,7 @@ dotenv.config();
 export default {
 	// App
 	secret: process.env.APP_SECRET || "",
-	port: process.env.APP_PORT || 4008,
+	port: (process.env.APP_PORT || 4008) as number,
 
 	//web push
 	webPushContact: process.env.WEB_PUSH_CONTACT || "",

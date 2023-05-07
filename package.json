@@ -18,16 +18,15 @@
 	},
 	"scripts": {
 		"test": "tsnd --respawn --transpile-only --exit-child --require tsconfig-paths/register src/test/index.ts",
-		"run": "tsnd --respawn --transpile-only --exit-child --require tsconfig-paths/register src/test/refCode.ts",
 		"watch": "tsc-alias -w & tsc -w",
 		"build": "tsc && tsc-alias",
 		"socket": "npm run dev src/socket/app.ts",
 		"app": "tsnd --respawn --transpile-only --exit-child --require tsconfig-paths/register src/client/app.ts",
 		"cron": "nodemon src/socket/cron.ts",
 		"dev": "tsnd --respawn --transpile-only --exit-child --require tsconfig-paths/register",
-		"dev2": "tsc-alias -w & tsc -w && pm2 reload all",
 		"push": "tsnd --respawn --transpile-only --exit-child --require tsconfig-paths/register src/git/push.ts",
-		"migrate": "node -r tsconfig-paths/register -r ts-node/register src/db/migrate.ts",
+		"start": "node -r tsconfig-paths/register -r ts-node/register",
+		"migrate": "npm start src/db/migrate.ts && npm start src/db/jsonSchema.ts",
 		"g:module": "npm run dev src/dev/utils/generateModule.ts"
 	},
 	"devDependencies": {
@@ -88,6 +87,7 @@
 		"mongoose-sequence": "^5.3.1",
 		"mysql2": "^3.2.4",
 		"nodemon": "^2.0.19",
+		"pino-pretty": "^10.0.0",
 		"random-indian-name": "^1.0.0",
 		"response-time": "^2.3.2",
 		"say": "^0.16.0",

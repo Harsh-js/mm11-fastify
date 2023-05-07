@@ -1,3 +1,5 @@
+import env from "./env";
+
 const convert = require("joi-to-json");
 
 export default {
@@ -12,7 +14,7 @@ export default {
 			url: "https://swagger.io",
 			description: "Find more info here",
 		},
-		host: `localhost:${3001}`,
+		host: `localhost:${env.port}`,
 		schemes: ["http"],
 		consumes: ["application/json"],
 		produces: ["application/json"],

@@ -3,7 +3,7 @@ import Joi from "joi";
 import { Model, DataTypes } from "sequelize";
 import * as fs from "fs";
 
-const sequelizeToJoi = (model: typeof Model) => {
+const sequelizeToJoi = (model: any) => {
 	const attributes = model.getAttributes();
 
 	let joiSchema = ``;
@@ -27,7 +27,8 @@ const sequelizeToJoi = (model: typeof Model) => {
 		[DataTypes.JSONB.key]: `Joi.any()`,
 		[DataTypes.UUID.key]: `Joi.string().guid({ version: ["uuidv4"] })`,
 	};
-	for (const [key, value] of Object.entries(attributes)) {
+	for (const entry of Object.entries(attributes)) {
+		const [key, value]: any = entry;
 		const type = value.type.key;
 
 		let joiType = typeMapping[type];
@@ -51,24 +52,23 @@ const sequelizeToJoi = (model: typeof Model) => {
 	}
 
 	console.log("joiSchema: ", joiSchema);
-	return `Joi.object({${joiSchema}})`;
+	return `{${joiSchema}}`;
 };
 
 export default sequelizeToJoi;
 let content = ``;
 for (let key in models) {
-	const joiSchema = sequelizeToJoi(models[key]);
+	const joiSchema = sequelizeToJoi((models as any)[key]);
 	// console.log("userSchema: ", joiSchema);
 
 	content = content + `${key}:` + joiSchema + ",\n";
 }
 
-const joiSchema = sequelizeToJoi(models["states"]);
 
 // console.log("userSchema: ", joiSchema);
 
 fs.writeFileSync(
 	`${process.cwd()}/src/models/json/modelSchema.ts`,
-	`import * as Joi from 'joi';\n\nexport default {${content}};\n`,
+	`import * as Joi from 'joi';\n\n // @Auto Generated Schema please don't edit any\n\n export default {${content}};\n`,
 );
 // console.log("userSchema: ", userSchema);

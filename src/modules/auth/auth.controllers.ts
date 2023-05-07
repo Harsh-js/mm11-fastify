@@ -3,11 +3,12 @@ import authService from "./auth.services";
 import models from "@models/index";
 
 const authController = {
-	states: asyncWrapper(async (req, res) => {
+	test: asyncWrapper(async (req, res) => {
 		return { hello: "hi" };
 	}),
 	states2: async (req: any, res: any) => {
-		const list = await models.states.findAll({});
+		// const list = await models.states.findAll({});
+		const list: any = [];
 		return list;
 	},
 };
