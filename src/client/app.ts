@@ -20,7 +20,11 @@ import { errorHandler } from "@middleware/errorHanlder";
 import env from "@config/env";
 const convert = require("joi-to-json");
 
-// declare module "fastify" {}
+declare module "fastify" {
+	interface FastifyRequest {
+		UserId: any;
+	}
+}
 
 const schema = Joi.object({
 	name: Joi.string().default("something").optional(),
