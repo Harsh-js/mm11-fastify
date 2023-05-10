@@ -1,4 +1,8 @@
+import { customError } from "@helpers/AppErr";
+import apiError from "@helpers/errors";
 import models from "@models/index";
+
+import { settingsAttributes } from "@models/settings";
 
 const authService = {
 	test: async () => {
@@ -16,6 +20,35 @@ const authService = {
 		});
 
 		return states;
+	},
+
+	getSetting: async (
+		key: string,
+		parse?: boolean,
+		ignore?: boolean,
+	): Promise<settingsAttributes | null> => {
+		let setting = await models.settings.findOne({
+			where: {
+				key: key,
+			},
+		});
+
+		if (!setting) {
+			if (!ignore) {
+				return customError(apiError.noSettingFound);
+			}
+			return null;
+		}
+
+		const data = setting.toJSON();
+
+		if (parse) {
+			try {
+				data.value = JSON.parse(data.value);
+			} catch (err) {}
+		}
+
+		return data;
 	},
 };
 

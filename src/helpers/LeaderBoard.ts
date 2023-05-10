@@ -1,6 +1,5 @@
 import ioredis, { Redis } from "ioredis";
 import env from "@config/redis";
-import State from "@models/State";
 
 interface LeaderboardUser {
 	rank: number;
@@ -100,15 +99,6 @@ class Leaderboard {
 								userData?.state,
 							);
 							if (!stateName) {
-								let state = await State.findById(userData?.state);
-								if (state) {
-									userData.state_name = state.name;
-									await this.client.hset(
-										"stateData",
-										userData?.state,
-										state.name,
-									);
-								}
 							} else {
 								userData.state_name = stateName;
 							}

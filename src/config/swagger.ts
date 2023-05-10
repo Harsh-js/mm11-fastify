@@ -1,3 +1,4 @@
+import Joi from "joi";
 import env from "./env";
 
 const convert = require("joi-to-json");
@@ -22,16 +23,16 @@ export default {
 			{ name: "auth", description: "User related end-points" },
 			{ name: "user", description: "User related end-points" },
 		],
-		// securityDefinitions: {
-		//     apiKey: {
-		//         type: "apiKey",
-		//         name: "Authorization",
-		//         in: "header",
-		//         scheme: "bearer",
-		//         bearerFormat: "JWT",
-		//         description: "JWT access token",
-		//     },
-		// },
+		securityDefinitions: {
+			apiKey: {
+				type: "apiKey",
+				name: "Authorization",
+				in: "header",
+				scheme: "bearer",
+				bearerFormat: "JWT",
+				description: "JWT access token",
+			},
+		},
 	},
 	uiConfig: {
 		// docExpansion: "full",
@@ -49,35 +50,45 @@ export default {
 	staticCSP: true,
 	// @ts-ignore
 	transformStaticCSP: (header) => header,
-	exposeRoute: true,
+	exposeRoute: false,
 	transform: ({ schema, url }: any) => {
-		const {
-			params,
-			body,
-			querystring,
-			headers,
-			response,
-			...transformedSchema
-		} = schema;
 		let transformedUrl = url;
 
 		// Transform the schema as you wish with your own custom logic.
 		// In this example convert is from 'joi-to-json' lib and converts a Joi based schema to json schema
-		if (params) transformedSchema.params = convert(params);
-		if (body) transformedSchema.body = convert(body);
+		if (schema?.params) schema.params = convert(schema?.params);
+		if (schema?.body) schema.body = convert(schema?.body);
 		// console.log('transformedSchema.body: ', transformedSchema.body);
-		if (querystring) transformedSchema.querystring = convert(querystring);
-		if (headers) transformedSchema.headers = convert(headers);
-		if (schema.response) transformedSchema.response = schema.response;
+		if (schema?.querystring) schema.querystring = convert(schema?.querystring);
+		if (schema?.headers) schema.headers = convert(schema?.headers);
+		if (schema?.response) {
+			for (let code in schema?.response) {
+				if (typeof schema.response?.[code]?.describe !== "function") {
+					schema.response[code] = schema.response[code];
+				} else {
+					schema.response[code] = convert(
+						Joi.object({
+							status: Joi.boolean().required(),
+							message: Joi.string().required(),
+							data: schema.response[code],
+						}),
+					);
+				}
+			}
+		}
+		// schema.response =
+		// 	schema.response?.describe !== "function"
+		// 		? schema.response
+		// 		: convert(schema.response);
 
 		// can add the hide tag if needed
-		if (url.startsWith("/internal")) transformedSchema.hide = true;
+		if (url.startsWith("/internal")) schema.hide = true;
 
 		// can transform the url
 		if (url.startsWith("/latest_version/endpoint"))
 			transformedUrl = url.replace("latest_version", "v3");
 
-		return { schema: transformedSchema, url: transformedUrl };
+		return { schema: schema, url: transformedUrl };
 	},
 	securityHandlers: {
 		apiKey: (req: any, scopes: any, next: any) => {

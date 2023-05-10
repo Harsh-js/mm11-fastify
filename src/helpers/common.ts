@@ -1,7 +1,4 @@
 import { Request, Response } from "express";
-import { R } from "./response-helpers";
-import env from "@config/env";
-import axios from "axios";
 import {
 	uniqueNamesGenerator,
 	Config,
@@ -11,12 +8,7 @@ import {
 	starWars,
 	animals,
 } from "unique-names-generator";
-import otp from "./otp";
 import moment from "moment";
-
-export const sendSms = (mobile: String) => {
-	return true;
-};
 
 export function youtubeId(url: any) {
 	const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -48,63 +40,6 @@ export function ordinal_suffix_of(i: any) {
 	return i + "th";
 }
 
-const scores = new Map([
-	["ball", "Ball Start"],
-	["four", "4"],
-	["inning break", "Inning Break"],
-	["six", "6"],
-	["over", "Over Completed"],
-	["wide", "Wide Ball"],
-	["wide ball", "Wide Ball"],
-
-	["1", "1 Run"],
-	["2", "2 Runs"],
-	["3", "3 Runs"],
-	["4", "4 Runs"],
-	["Wicket", "Wicket"],
-	["Player injured", "Player injured"],
-	["Drink break", "Drink break"],
-	["drinks", "Drink break"],
-	["3 rd umpire", "3rd umpire"],
-]);
-
-//hi
-
-const scoresImg = new Map([
-	["ball", "bowlStart.gif"],
-	["four", ""],
-	["inning break", "inningBreak.gif"],
-	["six", "six.gif"],
-	["over", "overCompleted.gif"],
-	["wide", "wideBall.gif"],
-	["wide ball", "wideBall.gif"],
-
-	["1", ""],
-	["2", ""],
-	["3", ""],
-	["4", ""],
-	["wicket", "out.gif"],
-	["player injured", "playerInjured.gif"],
-	["drink break", "drinkBreak.gif"],
-	["drinks", "drinkBreak.gif"],
-	["3 rd umpire", "thirdUmpire.gif"],
-
-	["Toss time", "tossTime.gif"],
-	["Rain stop play", "rainStopPlay.gif"],
-]);
-
-export function ScoreFormater(score: any) {
-	score = `${score}`.toLowerCase();
-	if (!scores.has(score)) return capitalizeInitials(score);
-	return capitalizeInitials(scores.get(score));
-}
-
-export function ScoreImgFormater(score: any) {
-	score = `${score}`.toLowerCase();
-	if (!scoresImg.has(score)) return "";
-	return scoresImg.get(score);
-}
-
 export function generateRandomUserName() {
 	const customConfig: Config = {
 		dictionaries: [adjectives, colors, animals, names, starWars],
@@ -133,19 +68,6 @@ export function formatTime(seconds: number) {
 
 export interface AppRequest extends Request {
 	userId: string;
-}
-
-export function getMatchStatus(status: string) {
-	const map: any = {
-		Live: "LIVE",
-		Finished: "COMPLETED",
-		Upcoming: "UPCOMING",
-	};
-	return map[status] ?? "";
-}
-
-export function isTest(match_type: any) {
-	return `${match_type}`.toLocaleLowerCase() == "test";
 }
 
 export function shortNameConverter(fullName: string) {

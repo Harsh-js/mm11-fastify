@@ -4,20 +4,28 @@
 
 import AppErr from "@helpers/AppErr";
 import { R } from "@helpers/response-helpers";
-import Joi from "joi";
+import modelSchema from "@models/json/modelSchema";
+import Joi, { AnySchema } from "joi";
 
-export const Pick = (keys: any, object: any) => {
-	if (keys.length === 0) {
-		return object;
-	}
-	const subset = Object.fromEntries(
-		keys
-			.filter((key: any) => key in object) // line can be removed to make it inclusive
-			.map((key: any) => [key, object[key]]),
-	);
+type SchemaKeys<T> = {
+	[K in keyof T]: T[K] extends AnySchema ? K : never;
+}[keyof T];
 
-	return subset;
-};
+export function pick<
+	T extends Record<string, AnySchema>,
+	K extends SchemaKeys<T>,
+>(obj: T, keys: K[]): Pick<T, K> {
+	if (!keys.length) return obj;
+	const result = {} as Pick<T, K>;
+
+	keys.forEach((key) => {
+		if (obj.hasOwnProperty(key)) {
+			result[key] = obj[key];
+		}
+	});
+
+	return result;
+}
 
 export const Validate = (
 	res: any,
@@ -26,8 +34,8 @@ export const Validate = (
 	body: any,
 	{ unknown = false },
 ) => {
-	let pick = Pick(keys, obj);
-	let schema = Joi.object(pick).unknown(unknown).validate(body);
+	let Pick = pick(keys, obj);
+	let schema = Joi.object(Pick).unknown(unknown).validate(body);
 	if (schema.error) {
 		throw new AppErr(schema.error.message);
 	}

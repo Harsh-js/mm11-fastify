@@ -1,39 +1,42 @@
-import { FastifyReply as Response, FastifyRequest as Request } from 'fastify'
-import { AppRequest } from "./common";
+import { FastifyReply as Response, FastifyRequest as Request } from "fastify";
 import { customError } from "./AppErr";
 
 export function R(
-	res: Response,
 	status: boolean,
 	message: String,
 	data?: any,
 	meta?: any,
+	res?: Response,
 ) {
-	res.send({
-		status: status,
-		message: message,
-		data: data ?? {},
-		meta: meta ?? {},
-	});
-}
-export function _R(status: boolean, message: String, data?: any, meta?: any) {
-	return {
+	const object = {
 		status: status,
 		message: message,
 		data: data ?? {},
 		meta: meta ?? {},
 	};
+	if (res) {
+		return res.send(object);
+	}
+
+	return object;
 }
 
-export function asyncWrapper(callback: (req: Request, res: Response) => Promise<any>) {
+interface CustomRequest extends Request {
+	params: any;
+}
+
+export function asyncWrapper(
+	callback: (req: CustomRequest, res: Response) => Promise<any>,
+) {
 	return function (req: Request, res: Response) {
-		callback(req, res).catch((err: any) => {
-			console.log(err);
-			customError(err?.message)
-		});
+		callback(req, res)
+			.then((d) => res.send(d))
+			.catch((err: any) => {
+				console.log(err);
+				customError(err?.message);
+			});
 	};
 }
-
 
 /*
 	Post.findAndCountAll({

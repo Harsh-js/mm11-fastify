@@ -1,5 +1,5 @@
 import { AppRequest } from "@helpers/common";
-import express, { Response, Request } from "express";
+import { FastifyReply as Response, FastifyRequest as Request } from "fastify";
 import env from "@config/aws";
 import { R } from "./response-helpers";
 import path from "path";
@@ -43,7 +43,7 @@ export const uploadMultiFile = async (
 				const allowedExtension = [".png", ".jpg", ".jpeg"];
 
 				if (!allowedExtension.includes(extensionName)) {
-					return res.json({ message: "Invalid Image", status: false });
+					return res.send({ message: "Invalid Image", status: false });
 				}
 
 				filename = filename.substring(0, 3) + Date.now() + extensionName;
@@ -60,7 +60,7 @@ export const uploadMultiFile = async (
 				console.log("s3File?.Location: ", s3File?.Location);
 				data.push(s3File?.Location);
 			} catch (e) {
-				return R(res, false, "File upload failed");
+				return R(false, "File upload failed", {}, {}, res);
 			}
 		};
 
@@ -79,7 +79,7 @@ export const uploadMultiFile = async (
 		console.log("data: ", data);
 		return data;
 	} catch (e) {
-		return R(res, false, "File upload failed");
+		return R(false, "File upload failed", {}, {}, res);
 	}
 };
 
@@ -109,7 +109,7 @@ export const uploadOneFile = async (
 		const allowedExtension = [".png", ".jpg", ".jpeg", ".gif"];
 
 		if (!allowedExtension.includes(extensionName)) {
-			return res.json({ message: "Invalid Image", status: false });
+			return res.send({ message: "Invalid Image", status: false });
 		}
 
 		filename = "" + Date.now() + extensionName;
@@ -126,6 +126,6 @@ export const uploadOneFile = async (
 
 		return s3File?.Location;
 	} catch (e) {
-		return R(res, false, "File upload failed");
+		return R(false, "File upload failed", {}, {}, res);
 	}
 };
