@@ -5,6 +5,6 @@ import Joi from "joi";
 import schema from "./contest.schema";
 
 const contestRoute = async (app: FastifyInstance) => {
-	app.post("/test/:id", schema.test, cn.test);
+	app.post("/join-multy", schema.joinMulty, cn.joinMulty);
 };
 export default contestRoute;

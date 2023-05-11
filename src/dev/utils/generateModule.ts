@@ -24,7 +24,7 @@ const files: { path: string; content: string }[] = [
 	},
 	{
 		path: `${folder}/${moduleName}.schema.ts`,
-		content: `import { schemaWrapper } from "@helpers/schemaWrapper";\nimport modelSchema from "@models/json/modelSchema";\nimport { RouteShorthandOptions } from "fastify";\nimport Joi from "joi";\n\nconst s = new schemaWrapper({\n       tags: ["${moduleName}"],\n});\n\nconst ${moduleName}Schema: { [key: string]: RouteShorthandOptions } = {\n\n      test: s.schema(null, null, { hi: Joi.string() }, { id: Joi.string() }),\n};\n\nexport default ${moduleName}Schema;
+		content: `import { schemaWrapper } from "@helpers/schemaWrapper";\nimport modelSchema from "@models/json/modelSchema";\nimport { RouteShorthandOptions } from "fastify";\nimport Joi from "joi";\n\n// schema( body, query, response, params)\n\nconst s = new schemaWrapper({\n       tags: ["${moduleName}"],\n});\n\nconst ${moduleName}Schema: { [key: string]: RouteShorthandOptions } = {\n\n      test: s.schema(null, null, { hi: Joi.string() }, { id: Joi.string() }),\n};\n\nexport default ${moduleName}Schema;
         `,
 	},
 	{

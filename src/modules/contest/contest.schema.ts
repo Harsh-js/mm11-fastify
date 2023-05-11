@@ -7,8 +7,14 @@ const s = new schemaWrapper({
 	tags: ["contest"],
 });
 
-const contestSchema: { [key: string]: RouteShorthandOptions } = {
+// schema( body, query, response, params)
+
+const contestSchema = {
 	test: s.schema(null, null, { hi: Joi.string() }, { id: Joi.string() }),
+	joinMulty: s.schema({
+		contest_id: Joi.string().required(),
+		user_team_id: Joi.array().required(),
+	}) as RouteShorthandOptions,
 };
 
 export default contestSchema;

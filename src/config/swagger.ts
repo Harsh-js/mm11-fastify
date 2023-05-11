@@ -21,16 +21,13 @@ export default {
 		produces: ["application/json"],
 		tags: [
 			{ name: "auth", description: "User related end-points" },
-			{ name: "user", description: "User related end-points" },
+			{ name: "contest", description: "Contest related end-points" },
 		],
 		securityDefinitions: {
-			apiKey: {
+			Bearer: {
 				type: "apiKey",
 				name: "Authorization",
 				in: "header",
-				scheme: "bearer",
-				bearerFormat: "JWT",
-				description: "JWT access token",
 			},
 		},
 	},
@@ -75,6 +72,16 @@ export default {
 					);
 				}
 			}
+		} else {
+			schema.response = {};
+
+			schema.response["200"] = convert(
+				Joi.object({
+					status: Joi.boolean().required(),
+					message: Joi.string().required(),
+					data: Joi.any().required(),
+				}),
+			);
 		}
 		// schema.response =
 		// 	schema.response?.describe !== "function"

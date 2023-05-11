@@ -22,7 +22,7 @@ const convert = require("joi-to-json");
 
 declare module "fastify" {
 	interface FastifyRequest {
-		UserId: any;
+		userId: any;
 	}
 }
 
@@ -98,7 +98,8 @@ function main() {
 			},
 		);
 
-		server.register(routes.auth, { prefix: "/v1" });
+		server.register(routes.auth, { prefix: "/auth" });
+		server.register(routes.contest, { prefix: "/contests" });
 
 		server.setErrorHandler(errorHandler);
 

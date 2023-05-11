@@ -12,7 +12,9 @@ export function R(
 		status: status,
 		message: message,
 		data: data ?? {},
-		meta: meta ?? {},
+		...(meta && {
+			meta: meta ?? {},
+		}),
 	};
 	if (res) {
 		return res.send(object);
@@ -23,6 +25,7 @@ export function R(
 
 interface CustomRequest extends Request {
 	params: any;
+	body: any;
 }
 
 export function asyncWrapper(

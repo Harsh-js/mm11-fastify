@@ -1,5 +1,5 @@
 import { R, asyncWrapper } from "@helpers/response-helpers";
-import authService from "./auth.services";
+import authService from "./auth.service";
 import models from "@models/index";
 import apiError from "@helpers/errors";
 
@@ -10,7 +10,7 @@ const authController = {
 	}),
 	states: asyncWrapper(async (req: any, res: any) => {
 		const list = await authService.listStates();
-		return list;
+		return R(true, "State List", list);
 	}),
 
 	statusCheck: asyncWrapper(async (req: any, res: any) => {

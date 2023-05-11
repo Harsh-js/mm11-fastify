@@ -12,14 +12,19 @@ export class schemaWrapper {
 	}
 
 	public schema(
-		body: any,
-		querystring: any,
-		response: any,
-		params: any,
+		body?: any,
+		querystring?: any,
+		response?: any,
+		params?: any,
 	): RouteShorthandOptions | any {
 		const obj: RouteShorthandOptions = {
 			schema: {
-				tags: ["auth"],
+				security: [
+					{
+						Bearer: [],
+					},
+				],
+				tags: [...this.tags],
 			},
 		};
 
@@ -44,6 +49,6 @@ export class schemaWrapper {
 		if (params) {
 			obj.schema.params = Joi.object(params);
 		}
-		return obj;
+		return obj as RouteShorthandOptions;
 	}
 }

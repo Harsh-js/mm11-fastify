@@ -26,13 +26,12 @@ export const verifyToken = async (
 ): Promise<boolean> => {
 	try {
 		const token = validateHeadersAuth(request);
-		const decoded: ITokenDecoded = Object(jwt.verify(token));
+		// const decoded = jwt.verify(token);
 
-		request.userId = decoded.aud;
+		// request.userId = decoded;
 		return true;
 	} catch (err) {
 		customError(apiError.unauthorized);
-
 		return false;
 	}
 };
