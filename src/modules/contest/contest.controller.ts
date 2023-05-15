@@ -10,6 +10,10 @@ const contestController = {
 		const contestId = req.body.contest_id as string;
 		const userTeamIds = req.body.user_team_id as string[];
 
+		const { contest, fakeUser, spaceAvailable } =
+			await contestService.checkSpace(contestId, userTeamIds, req.userId);
+
+		const totalTeams = contest.total_teams;
 		return R(true, "Hello from contest");
 	}),
 };

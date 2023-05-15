@@ -14,6 +14,6 @@ export default class AppErr extends Error {
 	}
 }
 
-export const customError = (msg: string) => {
-	throw new AppErr(msg);
+export const customError = (msg: string, data?: any): never => {
+	throw new AppErr(msg, data);
 };

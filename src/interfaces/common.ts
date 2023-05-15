@@ -1,3 +1,4 @@
+import { contestsAttributes } from "@models/contests";
 import { Request } from "express";
 
 export default interface TEst extends Request {
