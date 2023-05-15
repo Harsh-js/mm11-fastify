@@ -79,6 +79,16 @@ const contestService = {
 	) => {
 		let today = moment();
 		let current = moment(contest.fixture.starting_at);
+
+		if (
+			contest.fixture.inning_number == 0 &&
+			current.diff(today, "seconds") <= 0 &&
+			contest.inning_number == 0
+		) {
+			await redis.unwatch();
+			await redis.incr(redisKey.contestSpace(contest.id));
+			return R(res, false, `Match is live, you can't join now`, null);
+		}
 	},
 	GetContestDetail: async (contestId: string, attributes = true) => {
 		return await models.contests.findOne({
