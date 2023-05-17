@@ -5,6 +5,13 @@ export default {
 	// App
 	secret: process.env.APP_SECRET || "",
 	port: (process.env.APP_PORT || 4008) as number,
+	Inning_Text: [
+		"Full Match",
+		"First Inning",
+		"Second Inning",
+		"Third Inning",
+		"Fourth Inning",
+	],
 
 	//web push
 	webPushContact: process.env.WEB_PUSH_CONTACT || "",

@@ -50,6 +50,13 @@ const authService = {
 
 		return data;
 	},
+	getUserById: async (userId: string) => {
+		const user = await models.users.findByPk(userId);
+
+		if (!user) return customError(apiError.userNotFound);
+
+		return user;
+	},
 };
 
 export default authService;
