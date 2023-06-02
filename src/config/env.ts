@@ -25,4 +25,7 @@ export default {
 	odds_api: {
 		base_url: "http://apicricketchampion.in/webservices",
 	},
+
+	larave_api: process.env.LARAVEL_API as string,
+	larave_event_secret: process.env.LARAVEL_EVENT_SECRET as string,
 };

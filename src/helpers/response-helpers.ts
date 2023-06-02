@@ -3,7 +3,7 @@ import { customError } from "./AppErr";
 
 export function R(
 	status: boolean,
-	message: String,
+	message: String | any,
 	data?: any,
 	meta?: any,
 	res?: Response,
@@ -11,7 +11,7 @@ export function R(
 	const object = {
 		status: status,
 		message: message,
-		data: data ?? {},
+		data: data ?? data === null ? null : {},
 		...(meta && {
 			meta: meta ?? {},
 		}),
@@ -26,6 +26,7 @@ export function R(
 interface CustomRequest extends Request {
 	params: any;
 	body: any;
+	query: any;
 }
 
 export function asyncWrapper(

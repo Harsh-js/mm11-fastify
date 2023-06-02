@@ -3,7 +3,10 @@ import { customError } from "@helpers/AppErr";
 import apiError from "@helpers/errors";
 import redisKey from "@helpers/redisKey";
 import { R } from "@helpers/response-helpers";
-import { contestsAttributes } from "@models/contests";
+import {
+	contestsAttributes,
+	contestsCreationAttributes,
+} from "@models/contests";
 import { fixturesAttributes } from "@models/fixtures";
 import models from "@models/index";
 import moment from "moment";
@@ -12,7 +15,13 @@ import {
 	PaymentCalcParams,
 	PaymentCalcResponse,
 } from "./contest";
-import { usersAttributes } from "@models/users";
+import { users, usersAttributes } from "@models/users";
+import { randomInRange } from "@helpers/common";
+import Leaderboard from "@helpers/leaderboard";
+import { Transaction } from "sequelize";
+import { user_teamsAttributes } from "@models/user_teams";
+import axios from "axios";
+import env from "@config/env";
 
 export interface CheckSpace {
 	contest: contestsAttributes;
@@ -124,20 +133,18 @@ const contestService = {
 		userTeamIds: string[],
 		userId: string,
 	) => {
-		let userTeamCount = await models.user_teams.count({
+		let userTeam = await models.user_teams.findAll({
 			where: {
 				id: userTeamIds,
-				fixture_id: contest.fixture_id,
-				user_id: userId,
-				inning_number: contest.inning_number,
 			},
+			attributes: ["id", "name"],
 		});
 
-		if (userTeamCount < userTeamIds.length || !userTeamCount) {
+		if (userTeam.length < userTeamIds.length || !userTeam.length) {
 			return customError(apiError.diffrentInningTeam);
 		}
 
-		return true;
+		return userTeam;
 	},
 
 	checkJoinedCount: async (
@@ -358,6 +365,69 @@ const contestService = {
 			}),
 		});
 	},
+
+	addTeamInLeaderboard: async (
+		contest: ContestWithFixture,
+		user: users,
+		userTeams: Pick<user_teamsAttributes, "id" | "name">[],
+		spaceAvailable: number,
+		totalTeams: number,
+	) => {
+		const lb = new Leaderboard(redisKey.leaderboard(contest.id));
+
+		userTeams.map((ut) => {
+			lb.rankMember(
+				ut.id,
+				0,
+				JSON.stringify({
+					id: user.id,
+					username: user.username,
+					is_sys_user: user.is_sys_user,
+					photo: user.photo,
+					prevRank: 0,
+					private: false,
+					teamName: ut.name,
+				}),
+				() => {
+					lb.totalMembers(async (totalJoined: any) => {
+						if (parseInt(totalJoined) == totalTeams || spaceAvailable <= 0) {
+							try {
+								/* Update contest's attribute is_full to 1 */
+								await contestService.updateContest(contest.id, { is_full: 1 });
+
+								if (contest?.auto_create_on_full) {
+									/* Auto create new contest */
+									await contestService.autoCreateContestEvent(contest.id);
+								}
+							} catch (e: any) {
+								console.error(e?.message);
+							}
+						}
+						lb.disconnect();
+					});
+				},
+			);
+			return;
+		});
+		return true;
+	},
+	autoCreateContestEvent: async (contestId: string) => {
+		const __response = await axios.post(env.larave_api, {
+			type: "autoCreateContest",
+			data: { contest_id: contestId },
+			secret: env.larave_event_secret,
+		});
+		return true;
+	},
+	updateContest: async (contestId: string, data: object) => {
+		let udpatedContest = await models.contests.update(data, {
+			where: {
+				id: contestId,
+			},
+		});
+		console.log("udpatedContest: ", udpatedContest);
+		return true;
+	},
 	checkforfakeattemp: async (user_id: string, contest: contestsAttributes) => {
 		let fake_data: any = await models.settings.findOne({
 			where: {
@@ -372,6 +442,80 @@ const contestService = {
 		} else {
 			return false;
 		}
+	},
+	addBotforFakeUser: async (
+		fake_user: any,
+		contest: contestsAttributes,
+		t?: Transaction,
+	) => {
+		const key = redisKey.contestSpace(contest.id);
+
+		let space = parseInt((await redis.get(key)) || "0");
+
+		if (!space && space <= 0) {
+			return false;
+		}
+
+		if (!fake_user) return false;
+
+		let system_user =
+			typeof fake_user.system_user === "object"
+				? fake_user.system_user[
+						randomInRange(0, fake_user.system_user.length - 1)
+				  ]
+				: fake_user.system_user;
+
+		let sys_user_team = await models.user_teams.findOne({
+			where: {
+				user_id: system_user,
+				fixture_id: contest.fixture_id,
+				inning_number: contest.inning_number,
+			},
+		});
+		if (!sys_user_team) return false;
+
+		let sys_user = await models.users.findByPk(system_user, {
+			attributes: ["id", "is_sys_user", "username", "photo"],
+		});
+
+		if (!sys_user) return false;
+
+		let newSpaceAvailable = await redis.decr(key);
+
+		await models.user_contests.create(
+			{
+				fixture_id: contest.fixture_id,
+				user_id: system_user,
+				contest_id: contest.id,
+				user_team_id: sys_user_team.id,
+				//payment_data: JSON.stringify(_paymentData),
+				created_at: moment().format() as any,
+				inning_number: contest.inning_number,
+			},
+			{ ...(t && { transaction: t }) },
+		);
+
+		const _lb = new Leaderboard(redisKey.leaderboard(contest.id));
+		_lb.rankMember(
+			sys_user_team.id,
+			0,
+			JSON.stringify({
+				id: sys_user.id,
+				username: sys_user.username,
+				is_sys_user: sys_user.is_sys_user,
+				photo: sys_user.photo,
+				prevRank: 0,
+				private: false,
+				teamName: sys_user_team.name,
+			}),
+			() => {
+				_lb.disconnect();
+			},
+		);
+
+		// await redis.set(isSecondAttemptKey, true);
+
+		return newSpaceAvailable;
 	},
 	getContestSpaceFromDB: async (contestId: string, totalTeams: any) => {
 		let joinedUserCount = await models.user_contests.count({

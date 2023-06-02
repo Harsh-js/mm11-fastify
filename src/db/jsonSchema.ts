@@ -1,5 +1,6 @@
 import models from "@models/index";
 import Joi from "joi";
+import Yup from "yup";
 import { Model, DataTypes } from "sequelize";
 import * as fs from "fs";
 
@@ -9,23 +10,23 @@ const sequelizeToJoi = (model: any) => {
 	let joiSchema = ``;
 
 	const typeMapping = {
-		[DataTypes.STRING.key]: `Joi.string()`,
-		[DataTypes.TEXT.key]: `Joi.string()`,
-		[DataTypes.CHAR.key]: `Joi.string()`,
-		[DataTypes.INTEGER.key]: `Joi.number().integer()`,
-		[DataTypes.TINYINT.key]: `Joi.number().integer()`,
-		[DataTypes.BIGINT.key]: `Joi.number().integer()`,
-		[DataTypes.FLOAT.key]: `Joi.number()`,
-		[DataTypes.REAL.key]: `Joi.number()`,
-		[DataTypes.DOUBLE.key]: `Joi.number()`,
-		[DataTypes.DECIMAL.key]: `Joi.number()`,
-		[DataTypes.DATE.key]: `Joi.date()`,
-		[DataTypes.DATEONLY.key]: `Joi.date()`,
-		[DataTypes.BOOLEAN.key]: `Joi.boolean()`,
-		[DataTypes.ENUM.key]: `Joi.any()`,
-		[DataTypes.JSON.key]: `Joi.any()`,
-		[DataTypes.JSONB.key]: `Joi.any()`,
-		[DataTypes.UUID.key]: `Joi.string().guid({ version: ["uuidv4"] })`,
+		[DataTypes.STRING.key]: `string()`,
+		[DataTypes.TEXT.key]: `string()`,
+		[DataTypes.CHAR.key]: `string()`,
+		[DataTypes.INTEGER.key]: `number().integer()`,
+		[DataTypes.TINYINT.key]: `number().integer()`,
+		[DataTypes.BIGINT.key]: `number().integer()`,
+		[DataTypes.FLOAT.key]: `number()`,
+		[DataTypes.REAL.key]: `number()`,
+		[DataTypes.DOUBLE.key]: `number()`,
+		[DataTypes.DECIMAL.key]: `number()`,
+		[DataTypes.DATE.key]: `date()`,
+		[DataTypes.DATEONLY.key]: `date()`,
+		[DataTypes.BOOLEAN.key]: `boolean()`,
+		[DataTypes.ENUM.key]: `mixed()`,
+		[DataTypes.JSON.key]: `mixed()`,
+		[DataTypes.JSONB.key]: `mixed()`,
+		[DataTypes.UUID.key]: `string().guid({ version: ["uuidv4"] })`,
 	};
 	for (const entry of Object.entries(attributes)) {
 		const [key, value]: any = entry;
@@ -41,13 +42,14 @@ const sequelizeToJoi = (model: any) => {
 
 		if (type == DataTypes.ENUM.key) {
 			joiType =
-				joiType + `.valid(${[...value.values].map((m) => `"${m}"`).join(",")})`;
+				joiType +
+				`.oneOf([${[...value.values].map((m) => `"${m}"`).join(",")}])`;
 		}
 
 		if (isRequired) {
 			joiSchema = joiSchema + `${key}:` + joiType + `.required(),\n`;
 		} else {
-			joiSchema = joiSchema + `${key}:` + joiType + `.allow(null),\n`;
+			joiSchema = joiSchema + `${key}:` + joiType + `.nullable(),\n`;
 		}
 	}
 
@@ -64,11 +66,10 @@ for (let key in models) {
 	content = content + `${key}:` + joiSchema + ",\n";
 }
 
-
 // console.log("userSchema: ", joiSchema);
 
 fs.writeFileSync(
 	`${process.cwd()}/src/models/json/modelSchema.ts`,
-	`import * as Joi from 'joi';\n\n // @Auto Generated Schema please don't edit any\n\n export default {${content}};\n`,
+	`import { object, string, array, tuple, date, boolean, number, mixed, } from "yup";\n\n // @Auto Generated Schema please don't edit any\n\n export default {${content}};\n`,
 );
 // console.log("userSchema: ", userSchema);

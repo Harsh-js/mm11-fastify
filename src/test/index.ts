@@ -1,25 +1,29 @@
-import modelSchema from "@models/json/modelSchema";
-import Joi, { AnySchema } from "joi";
+import Yup, {
+	object,
+	string,
+	array,
+	tuple,
+	date,
+	boolean,
+	number,
+	mixed,
+} from "yup";
+import { convertSchema, extendSchema } from "@sodaru/yup-to-json-schema";
 
-type SchemaKeys<T> = {
-	[K in keyof T]: T[K] extends AnySchema ? K : never;
-}[keyof T];
+const schema = object({
+	status: boolean().required(),
+	message: string().required(),
+	data: mixed().required(),
+});
 
-function pick<T extends Record<string, AnySchema>, K extends SchemaKeys<T>>(
-	obj: T,
-	keys: K[],
-): Pick<T, K> {
-	if (!keys.length) return obj;
-	const result = {} as Pick<T, K>;
+import Joi from "joi";
+const convert = require("joi-to-json");
 
-	keys.forEach((key) => {
-		if (obj.hasOwnProperty(key)) {
-			result[key] = obj[key];
-		}
-	});
+const schema2 = Joi.object({
+	status: Joi.boolean().required(),
+	message: Joi.string().required(),
+	data: Joi.any().required(),
+});
 
-	return result;
-}
-
-const picked = pick(modelSchema.adhaar, ["adhaar_number"]);
-console.log("picked: ", Joi.object(picked).validate({}).error);
+console.log(convertSchema(schema));
+console.log(convert(schema2));

@@ -1,7 +1,5 @@
 import { FastifyInstance } from "fastify";
 import cn from "./auth.controller";
-import modelSchema from "@models/json/modelSchema";
-import Joi from "joi";
 import schema from "./auth.schema";
 import { protectRoutes } from "@middleware/protectRoutes";
 

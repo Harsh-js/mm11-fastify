@@ -1,4 +1,4 @@
-const redis = require("../_db/redis");
+import redis from "@db/redis";
 
 const ValidTypes = ["teams", "contests"];
 
@@ -7,7 +7,7 @@ export async function addUserInMatch(
 	user_id: string,
 	type: string,
 	counts = 0,
-	contest_id = null,
+	contest_id: any = null,
 ) {
 	try {
 		// validation check

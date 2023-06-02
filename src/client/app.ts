@@ -4,8 +4,6 @@ import Fastify, {
 	HTTPMethods,
 	FastifyInstance,
 } from "fastify";
-import Joi from "joi";
-import "joi-extract-type";
 import swagger, {
 	FastifyStaticSwaggerOptions,
 	SwaggerOptions,
@@ -18,7 +16,6 @@ import { log } from "@helpers/logger";
 import routes from "./routes";
 import { errorHandler } from "@middleware/errorHanlder";
 import env from "@config/env";
-const convert = require("joi-to-json");
 
 declare module "fastify" {
 	interface FastifyRequest {
@@ -26,17 +23,7 @@ declare module "fastify" {
 	}
 }
 
-const schema = Joi.object({
-	name: Joi.string().default("something").optional(),
-	age: Joi.number().integer().min(0).max(130).optional(),
-	email: Joi.string().email(),
-});
-
-const paramSchema = Joi.object({
-	_id: Joi.string().optional(),
-});
-
-function main() {
+export default function app() {
 	try {
 		const server = Fastify({
 			// logger: {
@@ -49,8 +36,7 @@ function main() {
 			// 	},
 			// }
 		});
-
-		server.register(require("fastify-joi"));
+		// server.register(require("fastify-joi"));
 
 		server.register(fastifyRoutes);
 
@@ -62,7 +48,8 @@ function main() {
 
 		server.setValidatorCompiler(({ schema, ...other }: any) => {
 			return (data) => {
-				const val = schema.validate(data);
+				const val = schema.validateSync(data);
+				console.log("val: ", val);
 				if (val?.error) {
 					throw new AppErr(val?.error?.message);
 				}
@@ -71,37 +58,45 @@ function main() {
 			};
 		});
 
+		server.get("/testroute", async (req, res) => {
+			console.log(process.cwd());
+			return res.send("hello");
+		});
+
 		server.register(swagger, swaggerOptions as SwaggerOptions);
 
 		server.register(swaggerUi, swaggerOptions);
 
-		server.get(
-			"/healthcheck",
-			{
-				schema: {
-					params: paramSchema,
-					response: {
-						200: {
-							type: "object",
-							properties: {
-								message: { type: "string" },
-							},
-						},
-					},
+		// server.get(
+		// 	"/healthcheck",
+		// 	{
+		// 		schema: {
+		// 			params: paramSchema,
+		// 			response: {
+		// 				200: {
+		// 					type: "object",
+		// 					properties: {
+		// 						message: { type: "string" },
+		// 					},
+		// 				},
+		// 			},
 
-					querystring: schema,
-					tags: ["user"],
-				},
-			},
-			async (req, res) => {
-				return { hello: "world" };
-			},
-		);
+		// 			querystring: schema,
+		// 			tags: ["user"],
+		// 		},
+		// 	},
+		// 	async (req, res) => {
+		// 		return { hello: "world" };
+		// 	},
+		// );
 
 		server.register(routes.auth, { prefix: "/auth" });
 		server.register(routes.contest, { prefix: "/contests" });
+		server.register(routes.fixture, { prefix: "/fixtures" });
 
 		server.setErrorHandler(errorHandler);
+
+		console.log(server.routes);
 
 		console.log(`Server ready at http://localhost:${env.port}`);
 		return server;
@@ -122,4 +117,4 @@ const runServer = async (app: FastifyInstance) => {
 	});
 };
 
-runServer(main());
+runServer(app());

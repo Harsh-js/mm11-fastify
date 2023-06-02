@@ -1,6 +1,6 @@
 import { RouteShorthandOptions } from "fastify";
 import Joi from "joi";
-
+import Yup, { array, object } from "yup";
 interface schemaWrapperOpt {
 	tags: string[];
 }
@@ -31,23 +31,23 @@ export class schemaWrapper {
 		if (!obj || !obj?.schema) return null;
 
 		if (body) {
-			obj.schema.body = Joi.object(body);
+			obj.schema.body = object(body);
 		}
 
 		if (querystring) {
-			obj.schema.querystring = Joi.object(querystring);
+			obj.schema.querystring = object(querystring);
 		}
 
 		if (response) {
 			if (Array.isArray(response)) {
-				obj.schema.response = { 200: Joi.array().items(response[0]) };
+				obj.schema.response = { 200: array().of(response[0]) };
 			} else {
-				obj.schema.response = { 200: Joi.object(response) };
+				obj.schema.response = { 200: object(response) };
 			}
 		}
 
 		if (params) {
-			obj.schema.params = Joi.object(params);
+			obj.schema.params = object(params);
 		}
 		return obj as RouteShorthandOptions;
 	}

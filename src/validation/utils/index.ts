@@ -5,7 +5,7 @@
 import AppErr from "@helpers/AppErr";
 import { R } from "@helpers/response-helpers";
 import modelSchema from "@models/json/modelSchema";
-import Joi, { AnySchema } from "joi";
+import Yup, { AnySchema } from "yup";
 
 type SchemaKeys<T> = {
 	[K in keyof T]: T[K] extends AnySchema ? K : never;
@@ -35,11 +35,12 @@ export const Validate = (
 	{ unknown = false },
 ) => {
 	let Pick = pick(keys, obj);
-	let schema = Joi.object(Pick).unknown(unknown).validate(body);
-	if (schema.error) {
+	let schema = Yup.object(Pick).unknown(unknown).validateSync(body);
+
+	if (schema) {
 		throw new AppErr(schema.error.message);
 	}
 
-	let data = schema.value;
+	let data = schema;
 	return data;
 };

@@ -1,7 +1,30 @@
-import Joi from "joi";
+// import Joi from "joi";
 import env from "./env";
+import {
+	object,
+	string,
+	array,
+	tuple,
+	date,
+	boolean,
+	number,
+	mixed,
+} from "yup";
 
-const convert = require("joi-to-json");
+// const convert = require("joi-to-json");
+import { convertSchema } from "@sodaru/yup-to-json-schema";
+
+const removeKeyFromObj = (obj: any, key: string) => {
+	for (let _key in obj) {
+		if (_key == key) {
+			delete obj[key];
+		}
+
+		if (typeof obj[_key] == "object" && Object.keys(obj[_key]).length) {
+			removeKeyFromObj(obj[_key], key);
+		}
+	}
+};
 
 export default {
 	routePrefix: "/api/documentation",
@@ -21,6 +44,7 @@ export default {
 		produces: ["application/json"],
 		tags: [
 			{ name: "auth", description: "User related end-points" },
+			{ name: "fixture", description: "Contest related end-points" },
 			{ name: "contest", description: "Contest related end-points" },
 		],
 		securityDefinitions: {
@@ -53,20 +77,22 @@ export default {
 
 		// Transform the schema as you wish with your own custom logic.
 		// In this example convert is from 'joi-to-json' lib and converts a Joi based schema to json schema
-		if (schema?.params) schema.params = convert(schema?.params);
-		if (schema?.body) schema.body = convert(schema?.body);
+		if (schema?.params) schema.params = convertSchema(schema?.params);
+		if (schema?.body && typeof schema.body == "function")
+			schema.body = convertSchema(schema?.body);
 		// console.log('transformedSchema.body: ', transformedSchema.body);
-		if (schema?.querystring) schema.querystring = convert(schema?.querystring);
-		if (schema?.headers) schema.headers = convert(schema?.headers);
+		if (schema?.querystring)
+			schema.querystring = convertSchema(schema?.querystring);
+		if (schema?.headers) schema.headers = convertSchema(schema?.headers);
 		if (schema?.response) {
 			for (let code in schema?.response) {
 				if (typeof schema.response?.[code]?.describe !== "function") {
 					schema.response[code] = schema.response[code];
 				} else {
-					schema.response[code] = convert(
-						Joi.object({
-							status: Joi.boolean().required(),
-							message: Joi.string().required(),
+					schema.response[code] = convertSchema(
+						object({
+							status: boolean().required(),
+							message: string().required(),
 							data: schema.response[code],
 						}),
 					);
@@ -75,18 +101,16 @@ export default {
 		} else {
 			schema.response = {};
 
-			schema.response["200"] = convert(
-				Joi.object({
-					status: Joi.boolean().required(),
-					message: Joi.string().required(),
-					data: Joi.any().required(),
+			schema.response["200"] = convertSchema(
+				object({
+					status: boolean().required(),
+					message: string().required(),
+					data: mixed().required(),
 				}),
 			);
 		}
-		// schema.response =
-		// 	schema.response?.describe !== "function"
-		// 		? schema.response
-		// 		: convert(schema.response);
+
+		removeKeyFromObj(schema, "default");
 
 		// can add the hide tag if needed
 		if (url.startsWith("/internal")) schema.hide = true;
