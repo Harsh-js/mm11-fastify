@@ -1,3 +1,4 @@
+import { fixtures } from "@models/fixtures";
 import modelSchema from "@models/json/modelSchema";
 import Yup from "yup";
 
@@ -11,4 +12,4 @@ export const fixtureListResponse = Yup.object({
 	seconds: Yup.number(),
 });
 
-export type FixtureListResponse = Yup.InferType<typeof fixtureListResponse>;
+export type FixtureListResponse = Yup.InferType<typeof fixtureListResponse> & fixtures;

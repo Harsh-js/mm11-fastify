@@ -32,6 +32,8 @@ const fixtureSchema = {
 		},
 		[fixtureListResponse],
 	),
+	banner: s.schema(null, null, [object(modelSchema.banners)], null),
+
 };
 
 export default fixtureSchema;

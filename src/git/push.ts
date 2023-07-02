@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import simplegit from "simple-git";
 const git = simplegit();
+import chilprocess from "child_process";
 
 const push = async () => {
 	try {
@@ -34,5 +35,36 @@ const push = async () => {
 		console.log("GIT ERROR: " + e);
 	}
 };
+
+const pushManual = async () => {
+	try {
+		var args = process.argv.slice(2);
+
+		// if (!args.length) return console.warn("add a message");
+
+		const message = args[0] || "Bug Fixes.";
+
+		const path = args[1] || ".";
+
+		chilprocess.exec("git add .", (err, ...stdout) => {
+			if (!err) {
+				console.log("1: ", stdout);
+				chilprocess.exec(`git commit -m "${message}"`, (err, ...stdout2) => {
+					if (!err) {
+						console.log("2: ", stdout2);
+
+						chilprocess.exec(`git push origin main`, (err, ...stdout3) => {
+							if (!err) {
+								console.log("3: ", stdout3);
+							}
+						});
+					}
+				});
+			}
+		});
+	} catch (e) {
+		console.log("GIT ERROR: " + e);
+	}
+};
 // any comment
-push().then();
+pushManual().then();

@@ -9,6 +9,8 @@ export default class AppErr extends Error {
 		this.data = null;
 		if (data) {
 			this.data = data;
+		} else {
+			this.data = null;
 		}
 		// this.stack = "";
 	}

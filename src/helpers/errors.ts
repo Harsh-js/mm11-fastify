@@ -2,7 +2,7 @@ import env from "@config/env";
 const apiError = {
 	noSettingFound: "No setting found.",
 	invalidCheck: "Invalid check.",
-	unauthorized: "Unauthorized",
+	unauthorized: "Unauthorized User",
 	invalidContest: "Invalid Contest",
 	contestFull: "Contest full",
 	_contestFull: "Contest full.",

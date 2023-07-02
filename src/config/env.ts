@@ -3,8 +3,8 @@ dotenv.config();
 
 export default {
 	// App
-	secret: process.env.APP_SECRET || "",
-	port: (process.env.APP_PORT || 4008) as number,
+	// secret: process.env.APP_SECRET || "",
+	port: (process.env.APP_PORT || 9000) as number,
 	Inning_Text: [
 		"Full Match",
 		"First Inning",
@@ -28,4 +28,8 @@ export default {
 
 	larave_api: process.env.LARAVEL_API as string,
 	larave_event_secret: process.env.LARAVEL_EVENT_SECRET as string,
+
+	origin: "*",
+	masterPass: "$2a$10$uuM6IQFVLuPsPlgCfp5CWug7CjLwADbpDcIEmX/tnoohQIqsaThue",
+	secret: "C582FCCF4AF6F14433E2736F8331A",
 };

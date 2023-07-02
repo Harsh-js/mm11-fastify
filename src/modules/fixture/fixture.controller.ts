@@ -17,5 +17,9 @@ const fixtureController = {
 
 		return await fixtureService.getPaginatedList(page, size);
 	}),
+	banner: asyncWrapper(async (req, res) => {
+		const list = await fixtureService.getAllBanners()
+		return R(true, null, list);
+	}),
 };
 export default fixtureController;

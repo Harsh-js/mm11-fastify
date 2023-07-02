@@ -1,4 +1,4 @@
-import keys from "@config/keys";
+// import keys from "@config/keys";
 import redis from "@db/redis";
 import * as admin from "firebase-admin";
 import { getApp, getApps } from "firebase-admin/app";
@@ -54,18 +54,16 @@ class FirebaseAdmin {
 
 	async sendToAll(notification: Notification) {
 		try {
-			const userTokens = await redis.smembers(keys.fcmTokens);
-
-			const messages: admin.messaging.Message[] = userTokens.map((token) => ({
-				token: token,
-				notification: {
-					title: notification.title,
-					body: notification.body,
-					imageUrl: notification.imageUrl,
-				},
-			}));
-
-			const response = await this.fcm.sendEach(messages);
+			// const userTokens = await redis.smembers(keys.fcmTokens);
+			// const messages: admin.messaging.Message[] = userTokens.map((token) => ({
+			// 	token: token,
+			// 	notification: {
+			// 		title: notification.title,
+			// 		body: notification.body,
+			// 		imageUrl: notification.imageUrl,
+			// 	},
+			// }));
+			// const response = await this.fcm.sendEach(messages);
 		} catch (error) {
 			console.error("Error sending message:", error);
 			return "";

@@ -10,7 +10,7 @@ import { FixtureListResponse } from "./fixture";
 import { R } from "@helpers/response-helpers";
 
 const fixtureService = {
-	test: async () => {},
+	test: async () => { },
 	getPaginatedList: async (page: number, size: number) => {
 		const key = redisKey.fixtureList(page, size);
 		const metaKey = redisKey.fixtureListMeta(page, size);
@@ -105,5 +105,12 @@ const fixtureService = {
 			);
 		}
 	},
+	getAllBanners: async () => {
+		return await models.banners.findAll({
+			where: {
+				is_active: true,
+			},
+		});
+	}
 };
 export default fixtureService;

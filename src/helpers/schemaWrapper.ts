@@ -31,7 +31,7 @@ export class schemaWrapper {
 		if (!obj || !obj?.schema) return null;
 
 		if (body) {
-			obj.schema.body = object(body);
+			obj.schema.body = body;
 		}
 
 		if (querystring) {

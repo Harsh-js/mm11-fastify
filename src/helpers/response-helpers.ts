@@ -11,7 +11,7 @@ export function R(
 	const object = {
 		status: status,
 		message: message,
-		data: data ?? data === null ? null : {},
+		data: data ? data : data === null ? null : {},
 		...(meta && {
 			meta: meta ?? {},
 		}),
@@ -23,7 +23,7 @@ export function R(
 	return object;
 }
 
-interface CustomRequest extends Request {
+export interface CustomRequest extends Request {
 	params: any;
 	body: any;
 	query: any;
@@ -37,7 +37,8 @@ export function asyncWrapper(
 			.then((d) => res.send(d))
 			.catch((err: any) => {
 				console.log(err);
-				customError(err?.message);
+				console.log("😁 Error Cauth in 4k");
+				return customError(err?.message);
 			});
 	};
 }

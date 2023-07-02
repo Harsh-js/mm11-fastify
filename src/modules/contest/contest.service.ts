@@ -461,8 +461,8 @@ const contestService = {
 		let system_user =
 			typeof fake_user.system_user === "object"
 				? fake_user.system_user[
-						randomInRange(0, fake_user.system_user.length - 1)
-				  ]
+				randomInRange(0, fake_user.system_user.length - 1)
+				]
 				: fake_user.system_user;
 
 		let sys_user_team = await models.user_teams.findOne({

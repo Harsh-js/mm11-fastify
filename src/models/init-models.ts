@@ -191,6 +191,8 @@ import { players as _players } from "./players";
 import type { playersAttributes, playersCreationAttributes } from "./players";
 import { private_contests as _private_contests } from "./private_contests";
 import type { private_contestsAttributes, private_contestsCreationAttributes } from "./private_contests";
+import { privious_data as _privious_data } from "./privious_data";
+import type { privious_dataAttributes, privious_dataCreationAttributes } from "./privious_data";
 import { rank_categories as _rank_categories } from "./rank_categories";
 import type { rank_categoriesAttributes, rank_categoriesCreationAttributes } from "./rank_categories";
 import { ranks as _ranks } from "./ranks";
@@ -323,6 +325,7 @@ export {
   _personal_access_tokens as personal_access_tokens,
   _players as players,
   _private_contests as private_contests,
+  _privious_data as privious_data,
   _rank_categories as rank_categories,
   _ranks as ranks,
   _referal_amount_details as referal_amount_details,
@@ -535,6 +538,8 @@ export type {
   playersCreationAttributes,
   private_contestsAttributes,
   private_contestsCreationAttributes,
+  privious_dataAttributes,
+  privious_dataCreationAttributes,
   rank_categoriesAttributes,
   rank_categoriesCreationAttributes,
   ranksAttributes,
@@ -668,6 +673,7 @@ export function initModels(sequelize: Sequelize) {
   const personal_access_tokens = _personal_access_tokens.initModel(sequelize);
   const players = _players.initModel(sequelize);
   const private_contests = _private_contests.initModel(sequelize);
+  const privious_data = _privious_data.initModel(sequelize);
   const rank_categories = _rank_categories.initModel(sequelize);
   const ranks = _ranks.initModel(sequelize);
   const referal_amount_details = _referal_amount_details.initModel(sequelize);
@@ -1024,6 +1030,7 @@ export function initModels(sequelize: Sequelize) {
     personal_access_tokens: personal_access_tokens,
     players: players,
     private_contests: private_contests,
+    privious_data: privious_data,
     rank_categories: rank_categories,
     ranks: ranks,
     referal_amount_details: referal_amount_details,
